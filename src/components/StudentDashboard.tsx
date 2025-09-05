@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import TrafficLight from "./TrafficLight";
+import { ThemeToggle } from "./ThemeToggle";
 import { Users, MapPin, Clock, Utensils } from "lucide-react";
 import { getCurrentMeal, canBookMeal, formatTime, MEAL_TIMINGS } from "@/utils/mealTimings";
 
@@ -62,6 +63,7 @@ const StudentDashboard = ({}: StudentDashboardProps) => {
         {/* Header */}
         <div className="flex justify-between items-center">
           <h1 className="text-2xl font-bold text-foreground">Student Dashboard</h1>
+          <ThemeToggle />
         </div>
 
         {/* Live Count - Big Number */}

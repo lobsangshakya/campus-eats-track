@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useToast } from "@/hooks/use-toast";
 import TrafficLight from "./TrafficLight";
+import { ThemeToggle } from "./ThemeToggle";
 import { Users, Calendar, Settings, TrendingUp } from "lucide-react";
 
 interface AdminDashboardProps {}
@@ -50,6 +51,7 @@ const AdminDashboard = ({}: AdminDashboardProps) => {
         {/* Header */}
         <div className="flex justify-between items-center">
           <h1 className="text-2xl font-bold text-foreground">Admin Dashboard</h1>
+          <ThemeToggle />
         </div>
 
         {/* Key Metrics */}

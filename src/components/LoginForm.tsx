@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
+import { ThemeToggle } from "./ThemeToggle";
 
 interface LoginFormProps {
   onLogin: (userType: 'student' | 'admin') => void;
@@ -90,6 +91,9 @@ const LoginForm = ({ onLogin }: LoginFormProps) => {
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
+      <div className="absolute top-4 right-4">
+        <ThemeToggle />
+      </div>
       <Card className="w-full max-w-md p-8 shadow-[var(--shadow-card)]">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-foreground mb-2">Mess Login</h1>
