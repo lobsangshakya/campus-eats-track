@@ -7,9 +7,11 @@ import { ThemeToggle } from "./ThemeToggle";
 import { Users, MapPin, Clock, Utensils } from "lucide-react";
 import { getCurrentMeal, canBookMeal, formatTime, MEAL_TIMINGS } from "@/utils/mealTimings";
 
-interface StudentDashboardProps {}
+interface StudentDashboardProps {
+  onLogout: () => void;
+}
 
-const StudentDashboard = ({}: StudentDashboardProps) => {
+const StudentDashboard = ({ onLogout }: StudentDashboardProps) => {
   const [liveCount, setLiveCount] = useState(28);
   const [tableInfo, setTableInfo] = useState({ number: 1782, empty: 18, total: 40 });
   const [bookedMeal, setBookedMeal] = useState<string | null>(null);
@@ -63,7 +65,12 @@ const StudentDashboard = ({}: StudentDashboardProps) => {
         {/* Header */}
         <div className="flex justify-between items-center">
           <h1 className="text-2xl font-bold text-foreground">Student Dashboard</h1>
-          <ThemeToggle />
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            <Button variant="outline" onClick={onLogout} className="text-sm">
+              Logout
+            </Button>
+          </div>
         </div>
 
         {/* Live Count - Big Number */}

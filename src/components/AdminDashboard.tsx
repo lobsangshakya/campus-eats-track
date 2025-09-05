@@ -9,9 +9,11 @@ import TrafficLight from "./TrafficLight";
 import { ThemeToggle } from "./ThemeToggle";
 import { Users, Calendar, Settings, TrendingUp } from "lucide-react";
 
-interface AdminDashboardProps {}
+interface AdminDashboardProps {
+  onLogout: () => void;
+}
 
-const AdminDashboard = ({}: AdminDashboardProps) => {
+const AdminDashboard = ({ onLogout }: AdminDashboardProps) => {
   const [liveCount, setLiveCount] = useState(42);
   const [bookingsCount, setBookingsCount] = useState(28);
   const [walkInsCount, setWalkInsCount] = useState(14);
@@ -51,7 +53,12 @@ const AdminDashboard = ({}: AdminDashboardProps) => {
         {/* Header */}
         <div className="flex justify-between items-center">
           <h1 className="text-2xl font-bold text-foreground">Admin Dashboard</h1>
-          <ThemeToggle />
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            <Button variant="outline" onClick={onLogout} className="text-sm">
+              Logout
+            </Button>
+          </div>
         </div>
 
         {/* Key Metrics */}
