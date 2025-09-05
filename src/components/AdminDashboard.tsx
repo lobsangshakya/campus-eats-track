@@ -8,11 +8,9 @@ import { useToast } from "@/hooks/use-toast";
 import TrafficLight from "./TrafficLight";
 import { Users, Calendar, Settings, TrendingUp } from "lucide-react";
 
-interface AdminDashboardProps {
-  onLogout: () => void;
-}
+interface AdminDashboardProps {}
 
-const AdminDashboard = ({ onLogout }: AdminDashboardProps) => {
+const AdminDashboard = ({}: AdminDashboardProps) => {
   const [liveCount, setLiveCount] = useState(42);
   const [bookingsCount, setBookingsCount] = useState(28);
   const [walkInsCount, setWalkInsCount] = useState(14);
@@ -52,9 +50,6 @@ const AdminDashboard = ({ onLogout }: AdminDashboardProps) => {
         {/* Header */}
         <div className="flex justify-between items-center">
           <h1 className="text-2xl font-bold text-foreground">Admin Dashboard</h1>
-          <Button variant="outline" onClick={onLogout} className="text-sm">
-            Logout
-          </Button>
         </div>
 
         {/* Key Metrics */}

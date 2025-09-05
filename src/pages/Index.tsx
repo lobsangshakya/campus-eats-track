@@ -12,19 +12,15 @@ const Index = () => {
     setUserType(type);
   };
 
-  const handleLogout = () => {
-    setUserType(null);
-  };
-
   if (!userType) {
     return <LoginForm onLogin={handleLogin} />;
   }
 
   if (userType === 'admin') {
-    return <AdminDashboard onLogout={handleLogout} />;
+    return <AdminDashboard />;
   }
 
-  return <StudentDashboard onLogout={handleLogout} />;
+  return <StudentDashboard />;
 };
 
 export default Index;
