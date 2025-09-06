@@ -13,7 +13,7 @@ interface StudentDashboardProps {
 
 const StudentDashboard = ({ onLogout }: StudentDashboardProps) => {
   const [liveCount, setLiveCount] = useState(28);
-  const [tableInfo, setTableInfo] = useState({ number: 1782, empty: 18, total: 1789 });
+  const [tableInfo, setTableInfo] = useState({ number: 1782, empty: 18, total: 1782 });
   const [bookedMeal, setBookedMeal] = useState<string | null>(null);
   const [mealInfo, setMealInfo] = useState(getCurrentMeal());
   const { toast } = useToast();
