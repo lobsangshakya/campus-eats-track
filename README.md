@@ -1,73 +1,148 @@
-# Welcome to your Lovable project
+# 🍽️ Campus Eats - University Mess Portal
 
-## Project info
+A modern, real-time university mess/canteen management system with SMS OTP authentication.
 
-**URL**: https://lovable.dev/projects/d87e8c72-b046-41c9-97d8-75e4d8c35501
+## ✨ Features
 
-## How can I edit this code?
+- **Real SMS OTP Authentication** - Uses Twilio for actual SMS delivery
+- **Student Dashboard** - Live crowd monitoring, table booking, meal schedules
+- **Admin Dashboard** - Real-time analytics, threshold management, activity monitoring
+- **Responsive Design** - Works on desktop and mobile devices
+- **Dark/Light Theme** - Toggle between themes
+- **Real-time Updates** - Live data updates every few seconds
 
-There are several ways of editing your application.
+## 🚀 Quick Start
 
-**Use Lovable**
+### Prerequisites
+- Node.js 18+ 
+- Twilio account (for SMS OTP)
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/d87e8c72-b046-41c9-97d8-75e4d8c35501) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+### 1. Clone and Install
+```bash
+git clone <your-repo>
+cd campus-eats-track
+npm install
+cd server && npm install && cd ..
 ```
 
-**Edit a file directly in GitHub**
+### 2. Configure Twilio
+1. Get credentials from [Twilio Console](https://console.twilio.com/)
+2. Copy environment file:
+   ```bash
+   cp server/env.example server/.env
+   ```
+3. Edit `server/.env` with your Twilio credentials:
+   ```env
+   TWILIO_ACCOUNT_SID=ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+   TWILIO_AUTH_TOKEN=your_auth_token_here
+   TWILIO_PHONE_NUMBER=+1234567890
+   PORT=3001
+   NODE_ENV=development
+   ```
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### 3. Start Development
+```bash
+# Option 1: Use startup script (recommended)
+./start-dev.sh
 
-**Use GitHub Codespaces**
+# Option 2: Manual start
+npm run start:full
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+# Option 3: Separate terminals
+npm run backend:dev  # Terminal 1
+npm run dev          # Terminal 2
+```
 
-## What technologies are used for this project?
+### 4. Access the App
+- **Frontend**: http://localhost:5173
+- **Backend API**: http://localhost:3001
+- **Health Check**: http://localhost:3001/health
 
-This project is built with:
+## 📱 Testing OTP
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+- **Any valid phone number**: Will receive real SMS
+- **Admin access**: Use `+911234567890` to login as admin
+- **Student access**: Use any other valid number
 
-## How can I deploy this project?
+## 🛠️ Available Scripts
 
-Simply open [Lovable](https://lovable.dev/projects/d87e8c72-b046-41c9-97d8-75e4d8c35501) and click on Share -> Publish.
+```bash
+npm run dev          # Start frontend only
+npm run backend      # Start backend only
+npm run start:full   # Start both frontend and backend
+npm run build        # Build for production
+npm run lint         # Run ESLint
+```
 
-## Can I connect a custom domain to my Lovable project?
+## 📁 Project Structure
 
-Yes, you can!
+```
+campus-eats-track/
+├── src/                    # Frontend React app
+│   ├── components/         # React components
+│   ├── services/          # API services
+│   └── utils/             # Utility functions
+├── server/                # Backend Express server
+│   ├── routes/           # API routes
+│   ├── services/         # Business logic
+│   └── server.js         # Main server file
+├── public/               # Static assets
+└── start-dev.sh         # Development startup script
+```
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## 🔧 API Endpoints
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+### OTP Endpoints
+- `POST /api/otp/send` - Send OTP to phone number
+- `POST /api/otp/verify` - Verify OTP code
+- `GET /health` - Health check
+
+## 🛡️ Security Features
+
+- Rate limiting (5 OTP requests per 15 minutes)
+- OTP expiry (5 minutes)
+- Max verification attempts (3 per OTP)
+- Input validation and sanitization
+- CORS protection
+
+## 📊 Tech Stack
+
+**Frontend:**
+- React 18 + TypeScript
+- Vite (build tool)
+- Tailwind CSS + shadcn/ui
+- React Router
+- TanStack Query
+
+**Backend:**
+- Node.js + Express
+- Twilio (SMS service)
+- CORS + Helmet (security)
+- Rate limiting
+
+## 🚨 Troubleshooting
+
+**"Failed to send OTP"**
+- Check Twilio credentials in `server/.env`
+- Verify phone number format
+- Check Twilio account balance
+
+**"Network error"**
+- Ensure backend is running on port 3001
+- Check CORS configuration
+- Verify API URL
+
+## 📖 Detailed Setup
+
+For detailed setup instructions, see [OTP_SETUP.md](./OTP_SETUP.md)
+
+## 🎯 Production Deployment
+
+1. Set `NODE_ENV=production`
+2. Update CORS origins in `server.js`
+3. Use environment-specific Twilio credentials
+4. Set up proper logging and monitoring
+
+---
+
+**🎉 Ready to use! Your university mess portal with real SMS OTP is now running.**
