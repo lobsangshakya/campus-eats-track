@@ -64,7 +64,10 @@ const StudentDashboard = ({ onLogout }: StudentDashboardProps) => {
       <div className="max-w-4xl mx-auto space-y-6">
         {/* Header */}
         <div className="flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-foreground">Student Dashboard</h1>
+          <div className="flex items-center gap-3">
+            <img src="/logo.png" alt="University Mess Portal" className="h-10 w-10 object-contain" />
+            <h1 className="text-2xl font-bold text-foreground">Student Dashboard</h1>
+          </div>
           <div className="flex items-center gap-2">
             <ThemeToggle />
             <Button variant="outline" onClick={onLogout} className="text-sm">

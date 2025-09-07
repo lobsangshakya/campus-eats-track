@@ -96,6 +96,9 @@ const LoginForm = ({ onLogin }: LoginFormProps) => {
       </div>
       <Card className="w-full max-w-md p-8 shadow-[var(--shadow-card)]">
         <div className="text-center mb-8">
+          <div className="flex justify-center mb-4">
+            <img src="/logo.png" alt="University Mess Portal" className="h-16 w-16 object-contain" />
+          </div>
           <h1 className="text-3xl font-bold text-foreground mb-2">Mess Login</h1>
           <p className="text-muted-foreground">Login with your phone number</p>
         </div>
