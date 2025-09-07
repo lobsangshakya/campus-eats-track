@@ -1,10 +1,10 @@
 # 🍽️ Campus Eats - University Mess Portal
 
-A modern, real-time university mess/canteen management system with SMS OTP authentication.
+A modern, real-time university mess/canteen management system with demo OTP authentication.
 
 ## ✨ Features
 
-- **Real SMS OTP Authentication** - Uses Twilio for actual SMS delivery
+- **Demo OTP Authentication** - Simple mock OTP system for demonstration
 - **Student Dashboard** - Live crowd monitoring, table booking, meal schedules
 - **Admin Dashboard** - Real-time analytics, threshold management, activity monitoring
 - **Responsive Design** - Works on desktop and mobile devices
@@ -15,62 +15,34 @@ A modern, real-time university mess/canteen management system with SMS OTP authe
 
 ### Prerequisites
 - Node.js 18+ 
-- Twilio account (for SMS OTP)
 
-### 1. Clone and Install
+### 1. Install Dependencies
 ```bash
 git clone <your-repo>
 cd campus-eats-track
 npm install
-cd server && npm install && cd ..
 ```
 
-### 2. Configure Twilio
-1. Get credentials from [Twilio Console](https://console.twilio.com/)
-2. Copy environment file:
-   ```bash
-   cp server/env.example server/.env
-   ```
-3. Edit `server/.env` with your Twilio credentials:
-   ```env
-   TWILIO_ACCOUNT_SID=ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-   TWILIO_AUTH_TOKEN=your_auth_token_here
-   TWILIO_PHONE_NUMBER=+1234567890
-   PORT=3001
-   NODE_ENV=development
-   ```
-
-### 3. Start Development
+### 2. Start Development
 ```bash
-# Option 1: Use startup script (recommended)
-./start-dev.sh
-
-# Option 2: Manual start
-npm run start:full
-
-# Option 3: Separate terminals
-npm run backend:dev  # Terminal 1
-npm run dev          # Terminal 2
+npm run dev
 ```
 
-### 4. Access the App
+### 3. Access the App
 - **Frontend**: http://localhost:5173
-- **Backend API**: http://localhost:3001
-- **Health Check**: http://localhost:3001/health
 
-## 📱 Testing OTP
+## 📱 Testing Demo OTP
 
-- **Any valid phone number**: Will receive real SMS
+- **Any phone number**: Will show OTP in toast notification
 - **Admin access**: Use `+911234567890` to login as admin
-- **Student access**: Use any other valid number
+- **Student access**: Use any other number
 
 ## 🛠️ Available Scripts
 
 ```bash
-npm run dev          # Start frontend only
-npm run backend      # Start backend only
-npm run start:full   # Start both frontend and backend
+npm run dev          # Start development server
 npm run build        # Build for production
+npm run preview      # Preview production build
 npm run lint         # Run ESLint
 ```
 
@@ -80,30 +52,24 @@ npm run lint         # Run ESLint
 campus-eats-track/
 ├── src/                    # Frontend React app
 │   ├── components/         # React components
-│   ├── services/          # API services
-│   └── utils/             # Utility functions
-├── server/                # Backend Express server
-│   ├── routes/           # API routes
-│   ├── services/         # Business logic
-│   └── server.js         # Main server file
+│   ├── pages/             # Page components
+│   ├── utils/             # Utility functions
+│   └── hooks/             # Custom React hooks
 ├── public/               # Static assets
-└── start-dev.sh         # Development startup script
+└── package.json          # Dependencies and scripts
 ```
 
-## 🔧 API Endpoints
+## 🎯 Demo Features
 
-### OTP Endpoints
-- `POST /api/otp/send` - Send OTP to phone number
-- `POST /api/otp/verify` - Verify OTP code
-- `GET /health` - Health check
+### OTP Flow
+1. **User enters phone number** → Validates format
+2. **Clicks "Send OTP"** → Shows 6-digit code in toast
+3. **User enters OTP** → Verifies against generated code
+4. **Success** → Logs in as student or admin
 
-## 🛡️ Security Features
-
-- Rate limiting (5 OTP requests per 15 minutes)
-- OTP expiry (5 minutes)
-- Max verification attempts (3 per OTP)
-- Input validation and sanitization
-- CORS protection
+### Dashboards
+- **Student**: Live crowd count, table booking, meal schedules
+- **Admin**: Analytics, threshold management, activity monitoring
 
 ## 📊 Tech Stack
 
@@ -114,35 +80,33 @@ campus-eats-track/
 - React Router
 - TanStack Query
 
-**Backend:**
-- Node.js + Express
-- Twilio (SMS service)
-- CORS + Helmet (security)
-- Rate limiting
+## 🎨 UI Components
 
-## 🚨 Troubleshooting
+Built with shadcn/ui components:
+- Cards, Buttons, Inputs
+- Toast notifications
+- Theme toggle
+- Responsive design
 
-**"Failed to send OTP"**
-- Check Twilio credentials in `server/.env`
-- Verify phone number format
-- Check Twilio account balance
+## 🚀 Production Deployment
 
-**"Network error"**
-- Ensure backend is running on port 3001
-- Check CORS configuration
-- Verify API URL
+1. Build the project:
+   ```bash
+   npm run build
+   ```
 
-## 📖 Detailed Setup
+2. Deploy the `dist` folder to your hosting service
 
-For detailed setup instructions, see [OTP_SETUP.md](./OTP_SETUP.md)
+3. Configure your domain and SSL
 
-## 🎯 Production Deployment
+## 🎯 Demo Usage
 
-1. Set `NODE_ENV=production`
-2. Update CORS origins in `server.js`
-3. Use environment-specific Twilio credentials
-4. Set up proper logging and monitoring
+1. **Start the app**: `npm run dev`
+2. **Enter any phone number** (e.g., `+1234567890`)
+3. **Click "Send OTP"** - Code appears in toast
+4. **Enter the OTP code** from the toast
+5. **Login as student** or use `+911234567890` for admin
 
 ---
 
-**🎉 Ready to use! Your university mess portal with real SMS OTP is now running.**
+**🎉 Ready to demo! Your university mess portal is now running with demo OTP authentication.**
