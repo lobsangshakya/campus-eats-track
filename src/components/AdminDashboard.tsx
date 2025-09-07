@@ -48,17 +48,25 @@ const AdminDashboard = ({ onLogout }: AdminDashboardProps) => {
   };
 
   return (
-    <div className="min-h-screen p-4 bg-background">
-      <div className="max-w-5xl mx-auto space-y-6">
+    <div className="min-h-screen p-4 bg-gradient-to-br from-background via-background to-muted/10">
+      <div className="max-w-5xl mx-auto space-y-6 animate-in fade-in-0 duration-700">
         {/* Header */}
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center animate-in slide-in-from-top-2 duration-500">
           <div className="flex items-center gap-3">
-            <img src="/logo.png" alt="University Mess Portal" className="h-10 w-10 object-contain" />
+            <img 
+              src="/logo.png" 
+              alt="University Mess Portal" 
+              className="h-10 w-10 object-contain hover:scale-110 transition-transform duration-300" 
+            />
             <h1 className="text-2xl font-bold text-foreground">Admin Dashboard</h1>
           </div>
           <div className="flex items-center gap-2">
             <ThemeToggle />
-            <Button variant="outline" onClick={onLogout} className="text-sm">
+            <Button 
+              variant="outline" 
+              onClick={onLogout} 
+              className="text-sm hover:scale-105 transition-all duration-200"
+            >
               Logout
             </Button>
           </div>
@@ -67,38 +75,44 @@ const AdminDashboard = ({ onLogout }: AdminDashboardProps) => {
         {/* Key Metrics */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Live Count */}
-          <Card className="p-6 bg-gradient-to-r from-primary/5 to-primary/10 border-primary/20">
+          <Card className="p-6 bg-gradient-to-r from-primary/5 to-primary/10 border-primary/20 hover:shadow-lg transition-all duration-300 animate-in slide-in-from-bottom-4 duration-500 delay-200">
             <div className="flex items-center gap-3 mb-2">
-              <Users className="h-6 w-6 text-primary" />
+              <Users className="h-6 w-6 text-primary animate-pulse" />
               <h3 className="text-sm font-medium text-foreground">Live Students</h3>
             </div>
-            <div className="text-3xl font-bold text-primary mb-1">{liveCount}</div>
+            <div className="text-3xl font-bold text-primary mb-1 transition-all duration-500 ease-out">
+              {liveCount}
+            </div>
             <p className="text-sm text-muted-foreground">Excluding staff</p>
           </Card>
 
           {/* Bookings */}
-          <Card className="p-6">
+          <Card className="p-6 hover:shadow-lg transition-all duration-300 animate-in slide-in-from-bottom-4 duration-500 delay-300">
             <div className="flex items-center gap-3 mb-2">
               <Calendar className="h-6 w-6 text-success" />
               <h3 className="text-sm font-medium text-card-foreground">Bookings Today</h3>
             </div>
-            <div className="text-3xl font-bold text-success mb-1">{bookingsCount}</div>
+            <div className="text-3xl font-bold text-success mb-1 transition-all duration-500 ease-out">
+              {bookingsCount}
+            </div>
             <p className="text-sm text-muted-foreground">Reserved slots</p>
           </Card>
 
           {/* Walk-ins */}
-          <Card className="p-6">
+          <Card className="p-6 hover:shadow-lg transition-all duration-300 animate-in slide-in-from-bottom-4 duration-500 delay-400">
             <div className="flex items-center gap-3 mb-2">
               <TrendingUp className="h-6 w-6 text-warning" />
               <h3 className="text-sm font-medium text-card-foreground">Walk-ins Today</h3>
             </div>
-            <div className="text-3xl font-bold text-warning mb-1">{walkInsCount}</div>
+            <div className="text-3xl font-bold text-warning mb-1 transition-all duration-500 ease-out">
+              {walkInsCount}
+            </div>
             <p className="text-sm text-muted-foreground">Direct entries</p>
           </Card>
         </div>
 
         {/* Analytics Chart */}
-        <Card className="p-6">
+        <Card className="p-6 hover:shadow-lg transition-all duration-300 animate-in slide-in-from-bottom-4 duration-500 delay-500">
           <h3 className="text-lg font-semibold text-card-foreground mb-4">
             Bookings vs Walk-ins
           </h3>
@@ -160,7 +174,7 @@ const AdminDashboard = ({ onLogout }: AdminDashboardProps) => {
               
               <Button 
                 onClick={handleUpdateThresholds}
-                className="w-full bg-gradient-to-r from-primary to-primary-hover"
+                className="w-full bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 hover:shadow-xl transition-all duration-300 hover:scale-105"
               >
                 Update Thresholds
               </Button>
