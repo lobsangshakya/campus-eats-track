@@ -60,34 +60,44 @@ const StudentDashboard = ({ onLogout }: StudentDashboardProps) => {
   const bookableMeal = getBookableMeal();
 
   return (
-    <div className="min-h-screen p-4 bg-background">
-      <div className="max-w-4xl mx-auto space-y-6">
+    <div className="min-h-screen p-4 bg-gradient-to-br from-background via-background to-muted/10">
+      <div className="max-w-4xl mx-auto space-y-6 animate-in fade-in-0 duration-700">
         {/* Header */}
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center animate-in slide-in-from-top-2 duration-500">
           <div className="flex items-center gap-3">
-            <img src="/logo.png" alt="University Mess Portal" className="h-10 w-10 object-contain" />
+            <img 
+              src="/logo.png" 
+              alt="University Mess Portal" 
+              className="h-10 w-10 object-contain hover:scale-110 transition-transform duration-300" 
+            />
             <h1 className="text-2xl font-bold text-foreground">Student Dashboard</h1>
           </div>
           <div className="flex items-center gap-2">
             <ThemeToggle />
-            <Button variant="outline" onClick={onLogout} className="text-sm">
+            <Button 
+              variant="outline" 
+              onClick={onLogout} 
+              className="text-sm hover:scale-105 transition-all duration-200"
+            >
               Logout
             </Button>
           </div>
         </div>
 
         {/* Live Count - Big Number */}
-        <Card className="p-8 text-center bg-gradient-to-r from-primary/5 to-primary/10 border-primary/20">
+        <Card className="p-8 text-center bg-gradient-to-r from-primary/5 to-primary/10 border-primary/20 hover:shadow-lg transition-all duration-300 animate-in slide-in-from-bottom-4 duration-500 delay-200">
           <div className="flex items-center justify-center gap-3 mb-2">
-            <Users className="h-8 w-8 text-primary" />
+            <Users className="h-8 w-8 text-primary animate-pulse" />
             <h2 className="text-lg font-medium text-foreground">Live Students</h2>
           </div>
-          <div className="text-6xl font-bold text-primary mb-2">{liveCount}</div>
+          <div className="text-6xl font-bold text-primary mb-2 transition-all duration-500 ease-out">
+            {liveCount}
+          </div>
           <p className="text-muted-foreground">Currently in mess</p>
         </Card>
 
         {/* Current Meal Info */}
-        <Card className="p-6 bg-gradient-to-r from-accent/30 to-accent/10 border-primary/30">
+        <Card className="p-6 bg-gradient-to-r from-accent/30 to-accent/10 border-primary/30 hover:shadow-lg transition-all duration-300 animate-in slide-in-from-left-4 duration-500 delay-300">
           <div className="flex items-center gap-3 mb-4">
             <Utensils className="h-6 w-6 text-primary" />
             <h3 className="text-lg font-semibold text-card-foreground">Current Meal</h3>
@@ -126,7 +136,7 @@ const StudentDashboard = ({ onLogout }: StudentDashboardProps) => {
         {/* Main Info Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Table Info */}
-          <Card className="p-6">
+          <Card className="p-6 hover:shadow-lg transition-all duration-300 animate-in slide-in-from-bottom-4 duration-500 delay-400">
             <div className="flex items-center gap-3 mb-4">
               <MapPin className="h-6 w-6 text-primary" />
               <h3 className="text-lg font-semibold text-card-foreground">Table Information</h3>
@@ -145,7 +155,7 @@ const StudentDashboard = ({ onLogout }: StudentDashboardProps) => {
           </Card>
 
           {/* Meal Schedule */}
-          <Card className="p-6">
+          <Card className="p-6 hover:shadow-lg transition-all duration-300 animate-in slide-in-from-bottom-4 duration-500 delay-500">
             <div className="flex items-center gap-3 mb-4">
               <Clock className="h-6 w-6 text-primary" />
               <h3 className="text-lg font-semibold text-card-foreground">Today's Schedule</h3>
@@ -168,7 +178,7 @@ const StudentDashboard = ({ onLogout }: StudentDashboardProps) => {
         </div>
 
         {/* Book Slot Section */}
-        <Card className="p-6">
+        <Card className="p-6 hover:shadow-lg transition-all duration-300 animate-in slide-in-from-bottom-4 duration-500 delay-600">
           <div className="flex items-center gap-3 mb-4">
             <Clock className="h-6 w-6 text-primary" />
             <h3 className="text-lg font-semibold text-card-foreground">Table Booking</h3>
@@ -186,7 +196,7 @@ const StudentDashboard = ({ onLogout }: StudentDashboardProps) => {
                   </p>
                   <Button 
                     onClick={() => handleBookSlot(bookableMeal)}
-                    className="bg-gradient-to-r from-primary to-primary-hover hover:shadow-lg transition-all duration-200"
+                    className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 hover:shadow-xl transition-all duration-300 hover:scale-105"
                     size="lg"
                   >
                     Book {bookableMeal.name} Slot
@@ -215,7 +225,7 @@ const StudentDashboard = ({ onLogout }: StudentDashboardProps) => {
                 onClick={() => setBookedMeal(null)}
                 variant="outline"
                 size="sm"
-                className="mt-3 border-success text-success hover:bg-success/10"
+                className="mt-3 border-success text-success hover:bg-success/10 hover:scale-105 transition-all duration-200"
               >
                 Cancel Booking
               </Button>
