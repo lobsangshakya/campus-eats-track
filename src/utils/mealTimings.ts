@@ -23,8 +23,8 @@ export const MEAL_TIMINGS: MealTiming[] = [
   },
   {
     name: "Snacks",
-    startTime: "16:30", 
-    endTime: "17:30",
+    startTime: "16:00", 
+    endTime: "17:00",
     bookingWindow: { start: 2, end: 15 }
   },
   {

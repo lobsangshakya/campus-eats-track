@@ -1,11 +1,16 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/components/ui/tooltip";
 import { useToast } from "@/hooks/use-toast";
 import TrafficLight from "./TrafficLight";
 import { ThemeToggle } from "./ThemeToggle";
 import { Users, MapPin, Clock, Utensils } from "lucide-react";
 import { getCurrentMeal, canBookMeal, formatTime, MEAL_TIMINGS } from "@/utils/mealTimings";
+import { DAILY_MENU, groupMenuByCategory } from "@/utils/menu";
 
 interface StudentDashboardProps {
   onLogout: () => void;
@@ -238,6 +243,73 @@ const StudentDashboard = ({ onLogout }: StudentDashboardProps) => {
             </div>
           </Card>
         </div>
+
+        {/* Today's Menu */}
+        <Card className="p-6 glass-card hover-lift smooth-transition animate-in slide-in-from-bottom-4 duration-500 delay-550">
+          <div className="flex items-center gap-3 mb-4">
+            <Utensils className="h-6 w-6 text-primary" />
+            <h3 className="text-lg font-semibold text-card-foreground">Today's Menu</h3>
+          </div>
+          <TooltipProvider>
+            <Tabs
+              defaultValue={mealInfo.current?.name || mealInfo.next?.name || MEAL_TIMINGS[0].name}
+              className="w-full"
+            >
+              <TabsList className="mb-3">
+                {MEAL_TIMINGS.map((meal) => (
+                  <TabsTrigger key={meal.name} value={meal.name}>
+                    {meal.name}
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+              {MEAL_TIMINGS.map((meal) => {
+                const items = DAILY_MENU[meal.name as keyof typeof DAILY_MENU] || [];
+                const groups = groupMenuByCategory(items);
+                return (
+                  <TabsContent key={meal.name} value={meal.name}>
+                    {items.length === 0 ? (
+                      <div className="text-sm text-muted-foreground">Menu not available.</div>
+                    ) : (
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {Object.entries(groups).map(([category, catItems]) => (
+                          catItems.length > 0 && (
+                            <div key={category} className="rounded-lg border bg-muted/40 p-4">
+                              <div className="flex items-center justify-between mb-2">
+                                <div className="font-medium text-card-foreground">{category}</div>
+                                <Badge variant="secondary">{catItems.length}</Badge>
+                              </div>
+                              <Separator className="my-2" />
+                              <ul className="space-y-2">
+                                {catItems.map((it) => (
+                                  <li key={it.id} className="flex items-center justify-between">
+                                    <div className="text-sm text-card-foreground">{it.name}</div>
+                                    <div className="flex items-center gap-2">
+                                      <Tooltip>
+                                        <TooltipTrigger asChild>
+                                          <Badge variant={it.isVeg === false ? "destructive" : "outline"}>
+                                            {it.isVeg === false ? "Non-Veg" : "Veg"}
+                                          </Badge>
+                                        </TooltipTrigger>
+                                        <TooltipContent>{it.isVeg === false ? "Contains meat/egg" : "Vegetarian"}</TooltipContent>
+                                      </Tooltip>
+                                      {it.calories !== undefined && (
+                                        <Badge variant="outline">{it.calories} kcal</Badge>
+                                      )}
+                                    </div>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          )
+                        ))}
+                      </div>
+                    )}
+                  </TabsContent>
+                );
+              })}
+            </Tabs>
+          </TooltipProvider>
+        </Card>
 
         {/* Book Slot Section */}
         <Card className="p-6 glass-card hover-lift smooth-transition animate-in slide-in-from-bottom-4 duration-500 delay-600">
