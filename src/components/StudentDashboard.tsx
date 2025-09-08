@@ -18,25 +18,82 @@ const StudentDashboard = ({ onLogout }: StudentDashboardProps) => {
   const [mealInfo, setMealInfo] = useState(getCurrentMeal());
   const { toast } = useToast();
 
-  // Mock real-time data updates
+  // Helpers for time-driven targets
+  const minutesFromString = (timeString: string) => {
+    const [h, m] = timeString.split(":").map(Number);
+    return h * 60 + m;
+  };
+
+  const getMealTarget = (mealName: string): number => {
+    // Seat targets (approx) out of tableInfo.total
+    switch (mealName) {
+      case "Lunch":
+        return 1600; // highest
+      case "Dinner":
+        return 1200; // medium-high
+      case "Breakfast":
+        return 900; // lower
+      case "Snacks":
+        return 700; // lowest
+      default:
+        return 200; // off-peak baseline
+    }
+  };
+
+  const computeTimeWeightedTarget = () => {
+    const now = new Date();
+    const currentMins = now.getHours() * 60 + now.getMinutes();
+
+    if (mealInfo.current) {
+      const start = minutesFromString(mealInfo.current.startTime);
+      const end = minutesFromString(mealInfo.current.endTime);
+      const duration = Math.max(1, end - start);
+      const progress = Math.min(1, Math.max(0, (currentMins - start) / duration));
+      // Smooth bell-ish curve using sine to peak mid-meal
+      const eased = Math.sin(progress * Math.PI);
+      const peakTarget = getMealTarget(mealInfo.current.name);
+      // Keep a floor so early/late in window isn't zero
+      const floor = Math.min(peakTarget * 0.35, 300);
+      return Math.round(floor + eased * (peakTarget - floor));
+    }
+
+    // If not in a meal window, bias toward next meal pre-peak (small ramp)
+    if (mealInfo.next) {
+      const nextStart = minutesFromString(mealInfo.next.startTime);
+      const preWindowStart = nextStart - 120; // 2 hours before next meal
+      const preWindowEnd = nextStart; // up to start
+      const clamped = Math.min(1, Math.max(0, (currentMins - preWindowStart) / Math.max(1, (preWindowEnd - preWindowStart))));
+      const nextTarget = getMealTarget(mealInfo.next.name) * 0.3; // small pre-meal activity
+      return Math.round(clamped * nextTarget);
+    }
+
+    return 150; // default idle baseline
+  };
+
+  // Time-driven data updates using easing toward target
   useEffect(() => {
     const interval = setInterval(() => {
+      setMealInfo(getCurrentMeal());
+
       setLiveCount(prev => {
-        const change = Math.random() > 0.6 ? (Math.random() > 0.5 ? 1 : -1) : 0;
-        return Math.max(0, Math.min(80, prev + change));
+        const target = computeTimeWeightedTarget();
+        const delta = target - prev;
+        // Easing: move a fraction toward target + tiny noise for liveliness
+        const step = Math.sign(delta) * Math.ceil(Math.max(1, Math.abs(delta) * 0.08));
+        const noise = Math.random() > 0.7 ? (Math.random() > 0.5 ? 1 : -1) : 0;
+        const next = prev + step + noise;
+        return Math.max(0, Math.min(tableInfo.total, next));
       });
-      
+
       setTableInfo(prev => ({
         ...prev,
-        empty: Math.max(0, Math.min(prev.total, prev.empty + (Math.random() > 0.7 ? (Math.random() > 0.5 ? 1 : -1) : 0)))
+        empty: Math.max(0, Math.min(prev.total, prev.total - (typeof liveCount === 'number' ? liveCount : 0)))
       }));
-      
-      // Update meal info every minute
-      setMealInfo(getCurrentMeal());
     }, 5000);
 
     return () => clearInterval(interval);
-  }, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mealInfo.current?.name, mealInfo.next?.name, tableInfo.total]);
 
   const handleBookSlot = (meal: typeof MEAL_TIMINGS[0]) => {
     setBookedMeal(meal.name);
