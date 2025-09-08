@@ -10,7 +10,8 @@ import TrafficLight from "./TrafficLight";
 import { ThemeToggle } from "./ThemeToggle";
 import { Users, MapPin, Clock, Utensils } from "lucide-react";
 import { getCurrentMeal, canBookMeal, formatTime, MEAL_TIMINGS } from "@/utils/mealTimings";
-import { DAILY_MENU, groupMenuByCategory } from "@/utils/menu";
+import { groupMenuByCategory } from "@/utils/menu";
+import { getDailyMenuForDate } from "@/utils/menuSchedule";
 
 interface StudentDashboardProps {
   onLogout: () => void;
@@ -22,6 +23,7 @@ const StudentDashboard = ({ onLogout }: StudentDashboardProps) => {
   const [bookedMeal, setBookedMeal] = useState<string | null>(null);
   const [mealInfo, setMealInfo] = useState(getCurrentMeal());
   const { toast } = useToast();
+  const todayMenu = getDailyMenuForDate(new Date());
 
   // Helpers for time-driven targets
   const minutesFromString = (timeString: string) => {
@@ -263,7 +265,7 @@ const StudentDashboard = ({ onLogout }: StudentDashboardProps) => {
                 ))}
               </TabsList>
               {MEAL_TIMINGS.map((meal) => {
-                const items = DAILY_MENU[meal.name as keyof typeof DAILY_MENU] || [];
+                const items = todayMenu[meal.name as keyof typeof todayMenu] || [];
                 const groups = groupMenuByCategory(items);
                 return (
                   <TabsContent key={meal.name} value={meal.name}>
