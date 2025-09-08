@@ -139,3 +139,42 @@
     @apply bg-muted-foreground;
   }
 }
+
+@layer utilities {
+  .smooth-transition {
+    @apply transition-all duration-300 ease-out;
+  }
+
+  .hover-lift {
+    @apply hover:-translate-y-0.5 hover:shadow-lg;
+  }
+
+  .glass-card {
+    @apply bg-card/60 backdrop-blur supports-[backdrop-filter]:bg-card/50 border border-border/60 shadow-sm;
+  }
+
+  .gradient-border {
+    position: relative;
+  }
+  .gradient-border::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    border-radius: inherit;
+    background: linear-gradient(135deg, hsl(var(--primary)/.5), hsl(var(--accent-foreground)/.2));
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  .subtle-gradient-bg {
+    background-image: var(--gradient-subtle);
+  }
+
+  .primary-gradient-bg {
+    background-image: var(--gradient-primary);
+  }
+}
