@@ -78,18 +78,23 @@ const StudentDashboard = ({ onLogout }: StudentDashboardProps) => {
       setLiveCount(prev => {
         const target = computeTimeWeightedTarget();
         const delta = target - prev;
-        // Easing: move a fraction toward target + tiny noise for liveliness
-        const step = Math.sign(delta) * Math.ceil(Math.max(1, Math.abs(delta) * 0.08));
-        const noise = Math.random() > 0.7 ? (Math.random() > 0.5 ? 1 : -1) : 0;
-        const next = prev + step + noise;
-        return Math.max(0, Math.min(tableInfo.total, next));
-      });
+        // Gentler easing: move 5% toward target, minimum 1
+        const easedStep = Math.max(1, Math.round(Math.abs(delta) * 0.05));
+        const direction = Math.sign(delta);
+        // Tiny noise for liveliness, smaller amplitude
+        const noise = Math.random() > 0.85 ? (Math.random() > 0.5 ? 1 : -1) : 0;
+        const next = prev + direction * easedStep + noise;
+        const clampedNext = Math.max(0, Math.min(tableInfo.total, next));
 
-      setTableInfo(prev => ({
-        ...prev,
-        empty: Math.max(0, Math.min(prev.total, prev.total - (typeof liveCount === 'number' ? liveCount : 0)))
-      }));
-    }, 5000);
+        // Update empty seats from the same computed next to avoid lag
+        setTableInfo(prevTable => ({
+          ...prevTable,
+          empty: Math.max(0, Math.min(prevTable.total, prevTable.total - clampedNext))
+        }));
+
+        return clampedNext;
+      });
+    }, 3000);
 
     return () => clearInterval(interval);
   // eslint-disable-next-line react-hooks/exhaustive-deps
