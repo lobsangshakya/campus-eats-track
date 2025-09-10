@@ -392,6 +392,7 @@ const StudentDashboard = ({ onLogout }: StudentDashboardProps) => {
               })}
             </Tabs>
           </TooltipProvider>
+          </div>
         </Card>
 
         {/* Book Slot Section */}
