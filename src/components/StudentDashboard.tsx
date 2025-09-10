@@ -395,59 +395,74 @@ const StudentDashboard = ({ onLogout }: StudentDashboardProps) => {
         </Card>
 
         {/* Book Slot Section */}
-        <Card className="p-6 glass-card hover-lift smooth-transition animate-in slide-in-from-bottom-4 duration-500 delay-600">
-          <div className="flex items-center gap-3 mb-4">
-            <Clock className="h-6 w-6 text-primary" />
-            <h3 className="text-lg font-semibold text-card-foreground">Table Booking</h3>
-          </div>
-          
-          {!bookedMeal ? (
-            <div className="text-center py-4">
-              {bookableMeal ? (
-                <>
-                  <p className="text-muted-foreground mb-2">
-                    Book your table for {bookableMeal.name}
-                  </p>
-                  <p className="text-sm text-muted-foreground mb-4">
-                    {formatTime(bookableMeal.startTime)} - {formatTime(bookableMeal.endTime)}
+        <Card className="border-0 shadow-lg bg-white dark:bg-slate-800 hover:shadow-xl transition-all duration-300">
+          <div className="p-6">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="p-2 rounded-lg bg-indigo-100 dark:bg-indigo-900/30">
+                <Clock className="h-5 w-5 text-indigo-600 dark:text-indigo-400" />
+              </div>
+              <h3 className="text-xl font-semibold text-slate-800 dark:text-slate-200">Table Booking</h3>
+            </div>
+            
+            {!bookedMeal ? (
+              <div className="text-center py-8">
+                {bookableMeal ? (
+                  <div className="max-w-md mx-auto">
+                    <div className="p-6 bg-gradient-to-br from-indigo-50 to-blue-50 dark:from-indigo-900/20 dark:to-blue-900/20 rounded-xl border border-indigo-200 dark:border-indigo-800 mb-6">
+                      <h4 className="text-lg font-semibold text-slate-800 dark:text-slate-200 mb-2">
+                        Book your table for {bookableMeal.name}
+                      </h4>
+                      <div className="flex items-center justify-center gap-2 text-slate-600 dark:text-slate-400">
+                        <Clock className="h-4 w-4" />
+                        <span className="font-medium">
+                          {formatTime(bookableMeal.startTime)} - {formatTime(bookableMeal.endTime)}
+                        </span>
+                      </div>
+                    </div>
+                    <Button 
+                      onClick={() => handleBookSlot(bookableMeal)}
+                      className="bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-700 hover:to-blue-700 text-white px-8 py-3 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+                      size="lg"
+                    >
+                      Book {bookableMeal.name} Slot
+                    </Button>
+                  </div>
+                ) : (
+                  <div className="max-w-md mx-auto p-6 bg-slate-50 dark:bg-slate-700 rounded-xl border border-slate-200 dark:border-slate-600">
+                    <div className="text-slate-500 dark:text-slate-400 mb-2">
+                      <Clock className="h-8 w-8 mx-auto mb-3" />
+                      <p className="text-lg font-medium">No bookings available</p>
+                    </div>
+                    <p className="text-sm text-slate-500 dark:text-slate-400">
+                      Booking opens 2-3 hours before meal time
+                    </p>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="text-center py-8">
+                <div className="max-w-md mx-auto p-6 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-xl border border-green-200 dark:border-green-800">
+                  <div className="w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <div className="text-2xl">✓</div>
+                  </div>
+                  <div className="text-green-700 dark:text-green-400 font-semibold text-xl mb-2">
+                    Slot Booked Successfully!
+                  </div>
+                  <p className="text-green-600 dark:text-green-500 mb-4">
+                    Reserved for {bookedMeal}
                   </p>
                   <Button 
-                    onClick={() => handleBookSlot(bookableMeal)}
-                    className="primary-gradient-bg text-primary-foreground hover:opacity-90 hover:shadow-xl smooth-transition hover:scale-105"
-                    size="lg"
+                    onClick={() => setBookedMeal(null)}
+                    variant="outline"
+                    size="sm"
+                    className="border-green-300 text-green-700 dark:border-green-700 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20 transition-all duration-200"
                   >
-                    Book {bookableMeal.name} Slot
+                    Cancel Booking
                   </Button>
-                </>
-              ) : (
-                <div className="py-4 px-6 bg-muted/50 rounded-lg">
-                  <p className="text-muted-foreground">
-                    No bookings available at this time
-                  </p>
-                  <p className="text-sm text-muted-foreground mt-1">
-                    Booking opens 2-3 hours before meal time
-                  </p>
                 </div>
-              )}
-            </div>
-          ) : (
-            <div className="text-center py-4 px-6 bg-success/10 rounded-lg border border-success/20">
-              <div className="text-success font-semibold text-lg mb-1">
-                ✓ Slot Booked Successfully!
               </div>
-              <p className="text-success/80">
-                Reserved for {bookedMeal}
-              </p>
-              <Button 
-                onClick={() => setBookedMeal(null)}
-                variant="outline"
-                size="sm"
-                className="mt-3 border-success text-success hover:bg-success/10 hover:scale-105 smooth-transition"
-              >
-                Cancel Booking
-              </Button>
-            </div>
-          )}
+            )}
+          </div>
         </Card>
       </div>
     </div>

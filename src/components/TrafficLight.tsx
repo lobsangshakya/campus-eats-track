@@ -36,19 +36,24 @@ const TrafficLight = ({ studentCount, thresholds = { green: 50, yellow: 80 } }: 
   const currentStatus = statusConfig[status];
 
   return (
-    <div className="flex items-center gap-4 p-4 rounded-lg bg-card border border-border hover:shadow-md transition-all duration-300">
+    <div className="flex items-center gap-4 p-4 rounded-xl bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 hover:shadow-md transition-all duration-300">
       <div className="relative">
-        <div className={`w-8 h-8 rounded-full ${currentStatus.color} shadow-lg transition-all duration-500 ease-out`} />
-        <div className={`absolute inset-0 w-8 h-8 rounded-full ${currentStatus.color} opacity-30 animate-ping`} />
+        <div className={`w-10 h-10 rounded-full ${currentStatus.color} shadow-lg transition-all duration-500 ease-out flex items-center justify-center`}>
+          <div className="w-6 h-6 rounded-full bg-white/20"></div>
+        </div>
+        <div className={`absolute inset-0 w-10 h-10 rounded-full ${currentStatus.color} opacity-30 animate-ping`} />
       </div>
       
-      <div className="animate-in slide-in-from-left-2 duration-500">
-        <h3 className="font-semibold text-card-foreground transition-colors duration-300">
+      <div className="flex-1">
+        <h3 className="font-semibold text-slate-800 dark:text-slate-200 text-lg transition-colors duration-300">
           {currentStatus.label}
         </h3>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
           {currentStatus.description}
         </p>
+        <div className="mt-2 text-xs text-slate-500 dark:text-slate-500">
+          {studentCount} students currently
+        </div>
       </div>
     </div>
   );
